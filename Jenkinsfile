@@ -42,6 +42,10 @@ pipeline {
         }
 
         stage('Deploy') {
+            when {
+                // Only run if Docker is available
+                expression { sh(script: 'command -v docker', returnStatus: true) == 0 }
+            }
             steps {
                 script {
                     echo 'Building and pushing Docker image...'
@@ -51,6 +55,11 @@ pipeline {
                         app.push()
                         app.push('latest')
                     }
+                }
+            }
+            post {
+                failure {
+                    echo 'Docker deployment skipped or failed - Docker not available'
                 }
             }
         }
