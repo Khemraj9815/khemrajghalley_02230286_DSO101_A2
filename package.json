@@ -1,0 +1,14 @@
+{
+  "name": "assignment1-node-app",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node app.js",
+    "test": "jest --reporters=default --reporters=jest-junit",
+    "build": "echo 'No build step needed for this Node app'"
+  },
+  "jest-junit": {
+    "outputDirectory": "./",
+    "outputName": "junit.xml",
+    "usePathForSuiteName": "true"
+  }
+}
