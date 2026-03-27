@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         // Must match the 'Name' you gave Node in Global Tool Configuration
-        nodejs 'NodeJS' 
+        nodejs 'Node-20' 
     }
 
     stages {
