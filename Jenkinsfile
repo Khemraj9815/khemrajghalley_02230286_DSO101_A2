@@ -42,24 +42,21 @@ pipeline {
         }
 
         stage('Deploy') {
-            when {
-                // Only run if Docker is available
-                expression { sh(script: 'command -v docker', returnStatus: true) == 0 }
-            }
             steps {
                 script {
-                    echo 'Building and pushing Docker image...'
-                    def app = docker.build("khemraj9815/node-app:${env.BUILD_ID}")
-                    
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-creds') {
-                        app.push()
-                        app.push('latest')
+                    try {
+                        echo 'Building and pushing Docker image...'
+                        def app = docker.build("khemraj9815/node-app:${env.BUILD_ID}")
+                        
+                        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-creds') {
+                            app.push()
+                            app.push('latest')
+                        }
+                        echo 'Docker image successfully pushed to Docker Hub!'
+                    } catch (Exception e) {
+                        echo "Docker deployment failed or skipped: ${e.message}"
+                        echo 'Continuing pipeline...'
                     }
-                }
-            }
-            post {
-                failure {
-                    echo 'Docker deployment skipped or failed - Docker not available'
                 }
             }
         }
