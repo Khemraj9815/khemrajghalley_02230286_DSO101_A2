@@ -6,6 +6,10 @@
     "test": "jest --reporters=default --reporters=jest-junit",
     "build": "echo 'No build step needed for this Node app'"
   },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "jest-junit": "^16.0.0"
+  },
   "jest-junit": {
     "outputDirectory": "./",
     "outputName": "junit.xml",
